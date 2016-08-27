@@ -7,7 +7,9 @@
     "data-start": "node data",
     "start": "npm run data-start",
     "test": "NODE_ENV=test mocha --compilers js:babel-register --recursive data/__tests__/*",
-    "lint": "eslint ./*.js android ios"
+    "lint": "eslint ./*.js android ios",
+    "introspect": "node scripts/downloadIntrospection.js",
+    "postinstall": "npm run introspect"
   },
   "engines": {
     "node": "6.x"
