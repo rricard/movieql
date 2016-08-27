@@ -9,6 +9,13 @@ const definitions = `
     year: Int!
     # List of characters played
     characters: [Character!]!
+    
+    # Average vote between, in a range [0, 10]
+    voteAverage: Float!
+    # Number of vote that the movie received
+    voteCount: Int!
+    # URL of the movie poster
+    posterUrl: String!
   }
 
   # Represents a human actor
@@ -35,7 +42,7 @@ const definitions = `
     movies: [Movie!]!
     # Retrieve a movie by it id
     movie(id: ID!): Movie
-    
+
     # Lists all actors in MovieQL
     actors: [Actor!]!
     # Retrieve an actor by it id
