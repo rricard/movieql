@@ -41,3 +41,6 @@ jspm_packages
 # Editors
 .vscode
 tsconfig.json
+
+# Personal config
+.env

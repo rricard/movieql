@@ -1,8 +1,11 @@
 language: node_js
 node_js:
-  - "6"
-  - "4"
+- '6'
+- '4'
 script:
-  - ./node_modules/.bin/flow
-  - npm test
-  - npm run lint
+- "./node_modules/.bin/flow"
+- npm test
+- npm run lint
+env:
+  global:
+    secure: sAQq13KWJ4ZbUTrDED6qT/0x7nmHr+RXwv7xAA5usQ7U1CIdJKQASksAerpjHAd0ZkdDmeXjbgCCAx73vBVMwU1Fh8Y5pi5SoL02K9eVPKf0EJaWfit+SgONAmJYmZ0rMxjtt3CQ5wont469oz1hdPaHS5usYdTuMO4zXXvdF37uQ8wSrpbj+JcQHeeAGGVUQgC/dhQ9EXSzngii0vI2ocjGkIPVY5dx2NuEnwaQPc9cqHdSgM2nRcVb2GSnI/2hcb56uIqFlDh1yIzKV6fbMJBQj2jsCWqL9hZN3m+4UV5ndW8M+761eTbIN67qoAcEPThHD2vZUfVG2hPgzX2dzwBcUW9Ljf4WsJG6PbQN7gEvDRtZYCbJDLMgLkYVal5RKcGNAIsm5l65Ji/+Djrtc5vAHwia1MxxKDXtmMnEMCslAw4Vsci38hDtpRgTUaXt2Dh6Rg+VmEhj1eyIdkdTwdlCpQw7Huo4Cklve/99TCfgxj3fjIDaBtjcC7QSmeKTee76cEF18PzCk+ZXLA5DBIBcycHuXA7ddS/IRI7DDThFR55LSSv0z/FLTUvCNaW/XOyakhJJ6ltDgg2mb6M3jE1RAxM+4eFbe9izjXvS8maBXfe9rk8oX6HXIpfFmkdaPnU7eXIQwSEd39YowYW/L+lorbVtoLKlFcdouzmaXa8=
