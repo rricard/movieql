@@ -34,6 +34,7 @@
     "enzyme": "^2.4.1",
     "eslint": "^3.4.0",
     "eslint-plugin-flowtype": "^2.11.4",
+    "eslint-plugin-graphql": "^0.2.4",
     "eslint-plugin-react": "^6.1.2",
     "flow-bin": "^0.31.1",
     "mocha": "^3.0.2"

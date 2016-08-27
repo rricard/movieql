@@ -18,6 +18,7 @@ module.exports = {
   plugins: [
     'flowtype',
     'react',
+    'graphql',
   ],
   extends: [
     'eslint:recommended',
@@ -42,5 +43,9 @@ module.exports = {
     'eol-last': 'error',
     'no-param-reassign': 'error',
     'linebreak-style': ['error', 'unix'],
+    'graphql/template-strings': ['error', {
+      env: 'apollo',
+      schemaJson: require('./data/schema.json'),
+    }],
   },
 };

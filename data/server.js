@@ -17,6 +17,10 @@ const app = express();
 app.use('/graphql', bodyParser.json(), apolloExpress({
   schema,
   context: {},
+  formatError: (error: Error) => {
+    console.error('GraphQL execution error:', error.stack);
+    return error.message;
+  }
 }));
 app.use('/graphiql', graphiqlExpress({
   endpointURL: '/graphql',

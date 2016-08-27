@@ -44,3 +44,6 @@ tsconfig.json
 
 # Personal config
 .env
+
+# Introspected schema
+schema.json
