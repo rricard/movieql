@@ -16,6 +16,7 @@ const app = express();
 
 app.use('/graphql', bodyParser.json(), apolloExpress({
   schema,
+  context: {},
 }));
 app.use('/graphiql', graphiqlExpress({
   endpointURL: '/graphql',
