@@ -20,6 +20,8 @@ const definitions = `
 
   # Represents a human actor
   type Actor {
+    # Unique identifier for the actor
+    id: ID!
     # Actor full name
     name: String! 
     # Characters played by the actor
