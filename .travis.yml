@@ -3,6 +3,6 @@ node_js:
   - "6"
   - "4"
 script:
-  - flow
+  - ./node_modules/.bin/flow
   - npm test
   - npm run lint
