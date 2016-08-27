@@ -7,13 +7,7 @@ import {
   StyleSheet,
 } from 'react-native';
 
-type Platform = 'IOS'|'ANDROID';
-
-type MovieQLProps = {
-  platform: Platform,
-};
-
-const MovieQL = (props: MovieQLProps): ?React.Element<*> => {
+const MovieQL = (): ?React.Element<*> => {
   return (
     <View style={styles.container}>
       <Text style={styles.welcome}>
