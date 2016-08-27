@@ -3,6 +3,8 @@
 const definitions = `
   # Represents a Movie
   type Movie {
+    # Unique identifier for the movie
+    id: ID!
     # Title of the release
     title: String!
     # Year of the release
@@ -30,6 +32,8 @@ const definitions = `
 
   # Represents a role played by a customer in a movie
   type Character {
+    # Unique identifier for the character
+    id: ID!
     # Actor playing the role
     actor: Actor!
     # Movie in which the role belong

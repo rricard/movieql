@@ -12,7 +12,12 @@ export class SalesforceConnector {
 
   query(soqlQuery: string): Promise<Array<any>> {
     return SalesforceConnector._connection.query(soqlQuery)
-    .then(({records}) => records);
+      .then(({records}) => records);
+  }
+
+  queryOne(soqlQuery: string): Promise<any> {
+    return this.query(soqlQuery)
+      .then(records => records.pop());
   }
 
   static initConnection(): Promise<jsforce.Connection> {
