@@ -9,11 +9,11 @@ describe('GraphQL backend connectors', () => {
       return SalesforceConnector.initConnection()
       .then(() => {
         const connector = new SalesforceConnector();
-        return connector.getConnection().query(`
+        return connector.query(`
           SELECT Id, Name FROM Actor__c
         `);
       })
-      .then(({records}) =>
+      .then(records =>
         assert.isAtLeast(records.length, 1)
       );
     });
