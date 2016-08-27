@@ -49,6 +49,11 @@ export class MovieDbConnector {
   }
 }
 
+export type SchemaConnectors = {
+  Salesforce: SalesforceConnector,
+  MovieDb: MovieDbConnector,  
+}
+
 const connectors = {
   Salesforce: SalesforceConnector,
   MovieDb: MovieDbConnector,

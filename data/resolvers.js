@@ -1,11 +1,9 @@
 /* @flow */
 
-import type {SalesforceConnector} from './connectors';
+import type { SchemaConnectors } from './connectors';
 
 type QueryContext = {
-  connectors: {
-    Salesforce: SalesforceConnector,
-  },
+  connectors: SchemaConnectors,
 };
 
 type ActorRecord = {
