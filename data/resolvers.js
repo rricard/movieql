@@ -2,7 +2,9 @@
 
 const resolvers = {
   RootQuery: {
-    hello: () => 'world',
+    movies: () => [],
+  },
+  Movie: {
   },
 };
 
