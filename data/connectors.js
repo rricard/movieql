@@ -1,5 +1,6 @@
 /* @flow */
 import jsforce from 'jsforce';
+import fetch from 'isomorphic-fetch';
 
 export class SalesforceConnector {
   static _connection: jsforce.Connection;
@@ -33,8 +34,24 @@ export class SalesforceConnector {
 }
 SalesforceConnector.initConnection();
 
+export class MovieDbConnector {
+  fetchMovie(id: string) {
+    const apiKey = process.env.MOVIE_DB_TOKEN;
+    if (!apiKey) {
+      return Promise.reject(new Error(
+        'Unable to find credentials for MovieDB (MOVIE_DB_TOKEN env variable)'
+      ));
+    }
+
+    const endpoint = `http://api.themoviedb.org/3/movie/${id}?api_key=${apiKey}`;
+    return fetch(endpoint)
+      .then(response => response.json());
+  }
+}
+
 const connectors = {
   Salesforce: SalesforceConnector,
+  MovieDb: MovieDbConnector,
 };
 
 export default connectors;
