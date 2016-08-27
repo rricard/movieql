@@ -14,7 +14,6 @@ type MovieQLProps = {
 };
 
 const MovieQL = (props: MovieQLProps): ?React.Element<*> => {
-  const {} = props;
   return (
     <View style={styles.container}>
       <Text style={styles.welcome}>
