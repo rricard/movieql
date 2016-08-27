@@ -8,6 +8,9 @@
     "start": "npm run data-start",
     "lint": "eslint ./*.js android ios"
   },
+  "engines": {
+    "node": "6.x"
+  },
   "dependencies": {
     "apollo-server": "^0.2.6",
     "body-parser": "^1.15.2",
