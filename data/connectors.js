@@ -10,8 +10,9 @@ export class SalesforceConnector {
     }
   }
 
-  getConnection(): jsforce.Connection {
-    return SalesforceConnector._connection;
+  query(soqlQuery: string): Promise<Array<any>> {
+    return SalesforceConnector._connection.query(soqlQuery)
+    .then(({records}) => records);
   }
 
   static initConnection(): Promise<jsforce.Connection> {

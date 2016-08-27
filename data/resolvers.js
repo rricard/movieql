@@ -8,24 +8,28 @@ type QueryContext = {
   },
 };
 
+type ActorRecord = {
+  Id: string,
+  Name: string,
+};
+
 const resolvers = {
   RootQuery: {
     movies: () => [],
     movie: () => ({}),
 
     actors: (_: any, __: any, {connectors}: QueryContext) =>
-      connectors.Salesforce.getConnection().query(`
+      connectors.Salesforce.query(`
         SELECT Id, Name FROM Actor__c
-      `)
-      .then(({records}) => records),
+      `),
     actor: () => ({}),
   },
   Movie: {
     characters: () => [],
   },
   Actor: { 
-    id: ({Id}) => Id,
-    name: ({Name}) => Name,
+    id: ({Id}: ActorRecord) => Id,
+    name: ({Name}: ActorRecord) => Name,
     characters: () => [],
   },
   Character: {
