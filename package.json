@@ -3,10 +3,21 @@
   "version": "0.0.1",
   "private": true,
   "scripts": {
-    "start": "node node_modules/react-native/local-cli/cli.js start"
+    "start": "node node_modules/react-native/local-cli/cli.js start",
+    "lint": "eslint ./*.js android ios"
   },
   "dependencies": {
     "react": "15.3.1",
     "react-native": "0.32.0"
+  },
+  "devDependencies": {
+    "babel-eslint": "^6.1.2",
+    "babel-plugin-transform-class-properties": "^6.11.5",
+    "babel-plugin-transform-object-rest-spread": "^6.8.0",
+    "babel-preset-latest": "^6.14.0",
+    "babel-preset-react": "^6.11.1",
+    "eslint": "^3.4.0",
+    "eslint-plugin-flowtype": "^2.11.4",
+    "eslint-plugin-react": "^6.1.2"
   }
 }
