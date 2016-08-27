@@ -15,6 +15,9 @@ module.exports = {
     es6: true,
     browser: true,
   },
+  globals: {
+    __DEV__: true,
+  },
   plugins: [
     'flowtype',
     'react',
