@@ -23,6 +23,7 @@
 .*/Libraries/react-native/React.js
 .*/Libraries/react-native/ReactNative.js
 .*/node_modules/jest-runtime/build/__tests__/.*
+.*/react-native-fetch-blob/.*
 
 # This file fails
 .*SwipeableListView\.js.*
