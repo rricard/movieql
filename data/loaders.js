@@ -74,15 +74,7 @@ function executeSoql(queries: string[], sfdcConnection: jsforce.Connection): Pro
 function fetchMovieDb(ids:string[], entity:string, token:string): Promise<any[]> {
   const fetchFromApi = id => 
     fetch(`${MOVIE_DB_API}/${entity}/${id}?api_key=${token}`)
-      .then(response => response.json())
-      .then(record => {
-        const relativeUrlKeys = Object.keys(record).filter(key => key.includes('_path'));
-        for (let key of relativeUrlKeys) {
-          const absoluteUrlKey = key.replace('_path', '_url');
-          record[absoluteUrlKey] = MOVIE_DB_API + record[key];
-        }
-        return record;
-      });
+      .then(response => response.json());
   
   return Promise.all(ids.map(fetchFromApi));
 }
