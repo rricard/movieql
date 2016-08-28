@@ -83,7 +83,7 @@ describe('GraphQL Schema', () => {
   it('should be able to fetch a movies by it id', () => {
     return graphql(schema, `
       {
-        movie(id:${PULP_FICTION_ID}) {
+        movie(id:"${PULP_FICTION_ID}") {
           id
           title
           voteAverage
@@ -101,8 +101,8 @@ describe('GraphQL Schema', () => {
   it('should be able to associate movies with their characters', () => {
     return graphql(schema, `
       {
-        movie(id:${PULP_FICTION_ID}) {
-          name
+        movie(id:"${PULP_FICTION_ID}") {
+          title
           characters {
             id
             name

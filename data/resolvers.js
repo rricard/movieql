@@ -54,7 +54,7 @@ const resolvers = {
         ${BASE_MOVIE_QUERY}
         WHERE Id='${id}'
       `)
-        .then(connectors.MovieDb.loadMovie),
+        .then((record:MovieRecord) => connectors.MovieDb.loadMovie(record)),
 
     actors: (_: any, __: any, {connectors}: QueryContext) =>
       connectors.Salesforce.query(BASE_ACTOR_QUERY),
