@@ -27,7 +27,9 @@ const definitions = `
     # Unique identifier for the actor
     id: ID!
     # Actor full name
-    name: String! 
+    name: String!
+    # URL of the actor picture
+    pictureUrl: String! 
     # Characters played by the actor
     characters: [Character!]!
   }

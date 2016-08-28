@@ -1,14 +1,15 @@
 /* @flow */
 
-import type { SchemaConnectors } from './connectors';
+import type { MovieQlLoaders } from './loaders';
 
 type QueryContext = {
-  connectors: SchemaConnectors,
+  loaders: MovieQlLoaders,
 };
 
 type ActorRecord = {
   Id: string,
   Name: string,
+  profile_url: ?string,
 };
 
 type CharacterRecord = {
@@ -34,45 +35,20 @@ export type MovieDbMovie = {
 
 export type MovieRecord = SFDCMovie & MovieDbMovie
 
-const BASE_MOVIE_QUERY = `
-  SELECT Id, Name, MovieDbId__c, Tagline__c 
-  FROM Movie__c
-`;
-
-const BASE_ACTOR_QUERY = `
-  SELECT Id, Name 
-  FROM Actor__c
-`;
-
-const BASE_CHARACTER_QUERY = `
-  SELECT Id, Name, Actor__c, Movie__c 
-  FROM Role__c
-`;
-
 
 const resolvers = {
   RootQuery: {
-    movies: (_: any, __: any, {connectors}: QueryContext) => 
-      connectors.Salesforce.query(BASE_MOVIE_QUERY)
-        .then((records:MovieRecord[]) => 
-          records.map(r => connectors.MovieDb.loadMovie(r))
-        ),
+    movies: (_: any, __: any, {loaders}: QueryContext) => 
+      loaders.allMovies(),
 
-    movie: (_: any, {id}: any, {connectors}: QueryContext) =>
-      connectors.Salesforce.queryOne(`
-        ${BASE_MOVIE_QUERY}
-        WHERE Id='${id}'
-      `)
-        .then((record:MovieRecord) => connectors.MovieDb.loadMovie(record)),
+    movie: (_: any, {id}: any, {loaders}: QueryContext) =>
+      loaders.movie.load(id),
 
-    actors: (_: any, __: any, {connectors}: QueryContext) =>
-      connectors.Salesforce.query(BASE_ACTOR_QUERY),
+    actors: (_: any, __: any, {loaders}: QueryContext) =>
+      loaders.allActors(),
 
-    actor: (_: any, {id}: any, {connectors}: QueryContext) =>
-      connectors.Salesforce.queryOne(`
-        ${BASE_ACTOR_QUERY}
-        WHERE Id='${id}'
-      `),
+    actor: (_: any, {id}: any, {loaders}: QueryContext) =>
+      loaders.actor.load(id),
   },
   Movie: {
     id: ({Id}: MovieRecord) => Id,
@@ -81,38 +57,26 @@ const resolvers = {
     voteCount: ({vote_count}: MovieRecord) => vote_count,
     voteAverage: ({vote_average}: MovieRecord) => vote_average,
 
-    characters: ({Id}: ActorRecord, _: any, {connectors}: QueryContext) => 
-      connectors.Salesforce.query(`
-        ${BASE_CHARACTER_QUERY}
-        WHERE Movie__c='${Id}'
-      `),
+    characters: ({Id}: ActorRecord, _: any, {loaders}: QueryContext) => 
+      loaders.charactersByMovie.load(Id),
   },
   Actor: { 
     id: ({Id}: ActorRecord) => Id,
     name: ({Name}: ActorRecord) => Name,
+    pictureUrl: ({profile_url}: ActorRecord) => profile_url,
     
-    characters: ({Id}: ActorRecord, _: any, {connectors}: QueryContext) => 
-      connectors.Salesforce.query(`
-        ${BASE_CHARACTER_QUERY}
-        WHERE Actor__c='${Id}'
-      `),
+    characters: ({Id}: ActorRecord, _: any, {loaders}: QueryContext) =>
+      loaders.charactersByActor.load(Id),
   },
   Character: {
     id: ({Id}: CharacterRecord) => Id,
     name: ({Name}: CharacterRecord) => Name,
 
-    actor: ({Actor__c}: CharacterRecord, _:any, {connectors}: QueryContext) =>
-      connectors.Salesforce.queryOne(`
-        ${BASE_ACTOR_QUERY}
-        WHERE Id='${Actor__c}'
-      `),
+    actor: ({Actor__c}: CharacterRecord, _:any, {loaders}: QueryContext) =>
+      loaders.actor.load(Actor__c),
 
-    movie: ({Movie__c}: CharacterRecord, _:any, {connectors}: QueryContext) => 
-      connectors.Salesforce.queryOne(`
-        ${BASE_MOVIE_QUERY}
-        WHERE Id='${Movie__c}'
-      `)
-      .then(connectors.MovieDb.loadMovie),
+    movie: ({Movie__c}: CharacterRecord, _:any, {loaders}: QueryContext) => 
+      loaders.movie.load(Movie__c),
   },
 };
 
