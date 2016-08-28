@@ -1,53 +1,65 @@
 /* @flow */
 
 import React from 'react';
+import {bindActionCreators} from 'redux';
+import {connect} from 'react-redux';
 import {
-  View,
-  Text,
-  StyleSheet,
-} from 'react-native';
-import gql from 'graphql-tag';
-import {graphql} from 'react-apollo';
+  actions as routerActions,
+  NavBar,
+  Route,
+  Router,
+  Schema,
+  TabBar,
+  TabRoute,
+} from 'react-native-router-redux';
 
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#F5FCFF',
-  },
-  rawData: {
-    fontSize: 14,
-    fontFamily: 'Menlo',
-    margin: 10,
-  },
-});
+import MovieList from './MovieList';
+import ActorList from './ActorList';
 
 type MovieQLProps = {
-  data: {
-    actors: Array<{id: string, title: string}>,
-  },
+  router: any,
+  actions: any,
+  dispatch: (action: any) => any,
 };
 
 const MovieQL = (props: MovieQLProps): ?React.Element<*> => {
-  const {data} = props;
+  const {router, actions, dispatch} = props;
   return (
-    <View style={styles.container}>
-      <Text style={styles.rawData}>
-      {JSON.stringify(data.actors, null, ' ')}
-      </Text>
-    </View>
+    <Router {...{router, actions, dispatch}} initial="movies">
+      <Schema 
+        name="default"
+        navBar={NavBar}
+        tabBar={TabBar}
+      />
+
+      <TabRoute name="tabBar">
+        <Route
+          name="movies"
+          component={MovieList}
+          title="Movies"
+          tabItem={{title: 'Movies'}}
+        />
+        <Route
+          name="actors"
+          component={ActorList}
+          title="Actors"
+          tabItem={{title: 'Actors'}}
+        />
+      </TabRoute>
+    </Router>
   );
 };
 
-const MovieQLWithData = graphql(gql`
-  {
-    actors {
-      id
-      name
-    }
-  }
-`)(MovieQL);
+const MovieQLWithState = connect(
+  (state) => ({
+    router: state.router,
+  }),
+  (dispatch) => ({
+    actions: bindActionCreators({
+      ...routerActions,
+    }, dispatch),
+    dispatch,
+  })
+)(MovieQL);
 
-export default MovieQLWithData;
+export default MovieQLWithState;
