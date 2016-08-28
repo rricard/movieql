@@ -36,7 +36,7 @@ const MovieRow = (props: MovieRowProps): ?React.Element<*> => {
 
 const MovieRowWithState = connect(
   () => ({}),
-  (dispatch, ownProps) => ({
+  (dispatch, ownProps: MovieRowProps) => ({
     openMovie() {
       const {title, id} = ownProps.movie;
       return dispatch(routerActions.push({

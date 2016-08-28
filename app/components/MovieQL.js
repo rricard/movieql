@@ -18,6 +18,7 @@ import moviesImage from '../../assets/movie-icon.png';
 import MovieList from './MovieList';
 import ActorList from './ActorList';
 import MovieDetail from './MovieDetail';
+import ActorDetail from './ActorDetail';
 
 type MovieQLProps = {
   router: any,
@@ -45,6 +46,11 @@ const MovieQL = (props: MovieQLProps): ?React.Element<*> => {
         name="movie"
         component={MovieDetail}
         title="Movie"
+      />
+      <Route
+        name="actor"
+        component={ActorDetail}
+        title="Actor"
       />
       <TabRoute name="tabBar" tint="#32DEAF">
         <Route

@@ -3,6 +3,10 @@ import {
   Text,
 } from 'react-native';
 import gql from 'graphql-tag';
+import {connect} from 'react-redux';
+import {
+  actions as routerActions,
+} from 'react-native-router-redux';
 
 import {createFragment} from 'apollo-client';
 
@@ -19,14 +23,31 @@ export const smallActorInfoFragment = createFragment(gql`
 `);
 
 type ActorRowProps = {
-  actor: SmallActorInfo;
+  actor: SmallActorInfo,
+  openActor: Function,
 };
 
 const ActorRow = (props: ActorRowProps): ?React.Element<*> => {
-  const {actor} = props;
+  const {actor, openActor} = props;
   return (
-    <Text>{actor.name}</Text>
+    <Text onPress={openActor}>{actor.name}</Text>
   );
 };
 
-export default ActorRow;
+const ActorRowWithState = connect(
+  () => ({}),
+  (dispatch, ownProps: ActorRowProps) => ({
+    openActor() {
+      const {name, id} = ownProps.actor;
+      return dispatch(routerActions.push({
+        name: 'actor',
+        data: {
+          title: name,
+          id,
+        },
+      }));
+    },
+  }),
+)(ActorRow);
+
+export default ActorRowWithState;
