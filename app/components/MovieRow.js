@@ -72,11 +72,16 @@ const styles = StyleSheet.create({
     color: '#222',
     flex: 1,
   },
-  bestActors: {
-    margin: 10,
-  },
   actor: {
-
+    flexDirection: 'row',
+    marginLeft: 10,
+    marginTop: 5,
+  },
+  actorFace: {
+    width: 20,
+    height: 20,
+    borderRadius: 10,
+    marginRight: 5,
   },
 });
 
@@ -97,9 +102,13 @@ const MovieRow = (props: MovieRowProps): ?React.Element<*> => {
         <View style={styles.info}>
           <Text style={styles.title}>{movie.title}</Text>
           <Text style={styles.tagline}>{movie.tagline}</Text>
-          <View style={styles.bestActors}>
+          <View>
             {movie.characters.slice(0, 2).map(({id, actor}) =>
               <View key={id} style={styles.actor}>
+                <JpegImage
+                  style={styles.actorFace}
+                  uri={actor.pictureUrl}
+                />
                 <Text>{actor.name}</Text>
               </View>
             )}
