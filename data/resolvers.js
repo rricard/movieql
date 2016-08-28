@@ -23,7 +23,8 @@ export type SFDCMovie = {
   Id: string,
   Name: string,
   Tagline__c: string,
-  MovieDbId__c: string
+  MovieDbId__c: string,
+  Year__c: string,
 }
 
 export type MovieDbMovie = {
@@ -53,6 +54,7 @@ const resolvers = {
   },
   Movie: {
     id: ({Id}: MovieRecord) => Id,
+    year: ({Year__c}: MovieRecord) => Year__c,
     title: ({Name}: MovieRecord) => Name,
     posterUrl: ({poster_path}: MovieRecord) => `${IMAGES_HOSTNAME}/w154/${poster_path}`,
     voteCount: ({vote_count}: MovieRecord) => vote_count,

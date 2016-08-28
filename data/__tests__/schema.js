@@ -81,6 +81,7 @@ describe('GraphQL Schema', () => {
         movies {
           id
           title
+          year
           voteAverage
           voteCount
           posterUrl
