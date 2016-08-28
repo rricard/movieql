@@ -49,14 +49,16 @@ export const smallMovieInfoFragment = createFragment(gql`
 
 const styles = StyleSheet.create({
   container: {
-    height: 150,
+    height: 135,
     flex: 1,
     flexDirection: 'row',
     alignItems: 'center',
+    borderBottomColor: '#ccc',
+    borderBottomWidth: .5,
   },
   poster: {
-    width: 100,
-    height: 150,
+    width: 90,
+    height: 135,
     backgroundColor: '#ccc',
   },
   info: {
