@@ -56,7 +56,7 @@ const resolvers = {
     id: ({Id}: MovieRecord) => Id,
     year: ({Year__c}: MovieRecord) => Year__c,
     title: ({Name}: MovieRecord) => Name,
-    posterUrl: ({poster_path}: MovieRecord) => `${IMAGES_HOSTNAME}/w154/${poster_path}`,
+    posterUrl: ({poster_path}: MovieRecord) => `${IMAGES_HOSTNAME}w154${poster_path}`,
     voteCount: ({vote_count}: MovieRecord) => vote_count,
     voteAverage: ({vote_average}: MovieRecord) => vote_average,
 
@@ -66,7 +66,7 @@ const resolvers = {
   Actor: { 
     id: ({Id}: ActorRecord) => Id,
     name: ({Name}: ActorRecord) => Name,
-    pictureUrl: ({profile_path}: ActorRecord) => `${IMAGES_HOSTNAME}/w185/${profile_path}`,
+    pictureUrl: ({profile_path}: ActorRecord) => `${IMAGES_HOSTNAME}w185${profile_path}`,
     
     characters: ({Id}: ActorRecord, _: any, {loaders}: QueryContext) =>
       loaders.charactersByActor.load(Id),
