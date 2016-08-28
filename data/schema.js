@@ -7,7 +7,6 @@ import {
 
 import typeDefs from './definitions';
 import resolvers from './resolvers';
-import connectors from './connectors';
 import mocks from './mocks';
 
 const isMocked = !process.env.MOVIE_DB_TOKEN ||
@@ -17,7 +16,6 @@ const isMocked = !process.env.MOVIE_DB_TOKEN ||
 const schema = makeExecutableSchema({
   typeDefs,
   resolvers,
-  connectors,
 });
 
 isMocked && addMockFunctionsToSchema({schema, mocks});
