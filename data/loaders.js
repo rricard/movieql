@@ -52,7 +52,7 @@ function reorderRecord(sortedIds:string[], records:SfdcRecord[]): SfdcRecord[] {
   );
 }
 
-function augmentRecordWithMovieDb(records:Array<SfdcRecord>, movieDbLoader:Dataloader): Array<SfdcRecord> {
+function augmentRecordWithMovieDb(records: Array<SfdcRecord>, movieDbLoader: Dataloader): Array<SfdcRecord> {
   const movieDBIds = records.map(({MovieDbId__c}) => MovieDbId__c);
 
   return movieDbLoader.loadMany(movieDBIds).then(movieInfos => 
@@ -62,7 +62,7 @@ function augmentRecordWithMovieDb(records:Array<SfdcRecord>, movieDbLoader:Datal
   );
 }
 
-function executeSoql(queries: string[], sfdcConnection): Promise<SfdcRecord[]> {
+function executeSoql(queries: string[], sfdcConnection: jsforce.Connection): Promise<SfdcRecord[]> {
   return Promise.all(
     queries.map(query => sfdcConnection
       .query(query)
@@ -137,9 +137,34 @@ function fetchCharactersByActor(actorIds, soqlDataLoader) {
   });
 }
 
-export function createLoaders(sfdcConnection: jsforce.Connection, movieDBToken: string): MovieQlLoaders {
+let salesforceConnection = null; 
+
+export function initSfdcConnection() {
+  const username = process.env.SFDC_USERNAME;
+  const password = process.env.SFDC_PWD_AND_TOKEN;
+  if (!username && !password) {
+    throw new Error('Expect SFDC_USERNAME and SFDC_PWD_AND_TOKEN to be set');
+  }
+
+  let connection = new jsforce.Connection();
+  return connection.login(username, password).then(() => {
+    console.info(`Connected to Salesforce as ${username ? username : 'Unknown'}`);
+    salesforceConnection = connection;
+  });
+}
+
+export function createLoaders(): MovieQlLoaders {
+  const movieDBToken = process.env.MOVIE_DB_TOKEN;
+  if (!movieDBToken) {
+    throw new Error('Expect MovieDB token');
+  }
+
+  if (!salesforceConnection) {
+    throw new Error('Connection with SFDC has not been initalized, need to call first "initSfdcConnection"');
+  }
+
   const soqlDataLoader = new Dataloader(queries => 
-    executeSoql(queries, sfdcConnection)
+    executeSoql(queries, salesforceConnection)
   );
 
   const movieDBMovieLoader = new Dataloader(ids =>
