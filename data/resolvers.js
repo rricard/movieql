@@ -40,17 +40,21 @@ const BASE_CHARACTER_QUERY = `
   FROM Role__c
 `;
 
+
 const resolvers = {
   RootQuery: {
     movies: (_: any, __: any, {connectors}: QueryContext) => 
       connectors.Salesforce.query(BASE_MOVIE_QUERY)
-      .then((records:MovieRecord[]) => records.map(r => connectors.MovieDb.loadMovie(r))),
+        .then((records:MovieRecord[]) => 
+          records.map(r => connectors.MovieDb.loadMovie(r))
+        ),
 
     movie: (_: any, {id}: any, {connectors}: QueryContext) =>
       connectors.Salesforce.queryOne(`
         ${BASE_MOVIE_QUERY}
         WHERE Id='${id}'
-      `),
+      `)
+        .then(connectors.MovieDb.loadMovie),
 
     actors: (_: any, __: any, {connectors}: QueryContext) =>
       connectors.Salesforce.query(BASE_ACTOR_QUERY),
@@ -98,7 +102,8 @@ const resolvers = {
       connectors.Salesforce.queryOne(`
         ${BASE_MOVIE_QUERY}
         WHERE Id='${Movie__c}'
-      `),
+      `)
+      .then(connectors.MovieDb.loadMovie),
   },
 };
 
