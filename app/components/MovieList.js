@@ -3,6 +3,7 @@
 import React from 'react';
 import {
   ListView,
+  ActivityIndicator,
 } from 'react-native';
 import gql from 'graphql-tag';
 import {graphql} from 'react-apollo';
@@ -18,6 +19,7 @@ import AppView from './ui/AppView';
 type MovieListProps = {
   data: {
     movies?: Array<SmallMovieInfo>,
+    loading: boolean,
   },
 };
 
@@ -49,16 +51,23 @@ class MovieList extends React.Component {
   
 
   render(): ?React.Element<*> {
+    const {data} = this.props;
     return (
       <AppView>
-        <ListView
-          
-          dataSource={this.state.dataSource}
-          renderRow={movie => 
-            <MovieRow key={movie.id} movie={movie} />
-          }
-          enableEmptySections={true}
-        />
+        {
+          data.loading?
+            <ActivityIndicator 
+              animating={true}
+              size="large"
+            /> :
+            <ListView
+              dataSource={this.state.dataSource}
+              renderRow={movie => 
+                <MovieRow key={movie.id} movie={movie} />
+              }
+              enableEmptySections={true}
+            />
+        }
       </AppView>
     );
   }
