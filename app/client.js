@@ -8,6 +8,9 @@ const GRAPHQL_ENDPOINT = __DEV__ ? 'http://localhost:3000/graphql' : 'https://mo
 
 const networkInterface = createNetworkInterface(GRAPHQL_ENDPOINT);
 
-const apolloClient = new ApolloClient({networkInterface});
+const apolloClient = new ApolloClient({
+  networkInterface,
+  shouldBatch: true,
+});
 
 export default apolloClient;
