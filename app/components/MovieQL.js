@@ -12,6 +12,8 @@ import {
   TabBar,
   TabRoute,
 } from 'react-native-router-redux';
+import actorsImage from '../../assets/actor-icon.png';
+import moviesImage from '../../assets/movie-icon.png';
 
 import MovieList from './MovieList';
 import ActorList from './ActorList';
@@ -22,28 +24,33 @@ type MovieQLProps = {
   dispatch: (action: any) => any,
 };
 
+const tabAssets = {
+  actors: actorsImage,
+  movies: moviesImage,
+};
+
 const MovieQL = (props: MovieQLProps): ?React.Element<*> => {
   const {router, actions, dispatch} = props;
   return (
-    <Router {...{router, actions, dispatch}} initial="movies">
+    <Router {...{router, actions, dispatch}} initial="movies" assets={tabAssets}>
       <Schema 
         name="default"
         navBar={NavBar}
         tabBar={TabBar}
       />
 
-      <TabRoute name="tabBar">
+      <TabRoute name="tabBar" tint="#32DEAF">
         <Route
           name="movies"
           component={MovieList}
           title="Movies"
-          tabItem={{title: 'Movies'}}
+          tabItem={{title: 'Movies', icon: tabAssets.movies}}
         />
         <Route
           name="actors"
           component={ActorList}
           title="Actors"
-          tabItem={{title: 'Actors'}}
+          tabItem={{title: 'Actors', icon: tabAssets.actors}}
         />
       </TabRoute>
     </Router>
