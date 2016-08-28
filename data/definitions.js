@@ -3,8 +3,12 @@
 const definitions = `
   # Represents a Movie
   type Movie {
+    # Unique identifier for the movie
+    id: ID!
     # Title of the release
     title: String!
+    # Short description of the movie
+    tagline: String!
     # Year of the release
     year: Int!
     # List of characters played
@@ -30,6 +34,8 @@ const definitions = `
 
   # Represents a role played by a customer in a movie
   type Character {
+    # Unique identifier for the character
+    id: ID!
     # Actor playing the role
     actor: Actor!
     # Movie in which the role belong
