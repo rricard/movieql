@@ -2,7 +2,6 @@
 
 import React from 'react';
 import {
-  View,
   ListView,
 } from 'react-native';
 import gql from 'graphql-tag';

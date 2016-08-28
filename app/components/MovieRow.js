@@ -8,7 +8,7 @@ import {createFragment} from 'apollo-client';
 
 export type SmallMovieInfo = {
   id: string,
-  name: string
+  title: string
 };
 
 export const smallMovieInfoFragment = createFragment(gql`
