@@ -7,6 +7,8 @@ const definitions = `
     id: ID!
     # Title of the release
     title: String!
+    # Short description of the movie
+    tagline: String!
     # Year of the release
     year: Int!
     # List of characters played

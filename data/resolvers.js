@@ -18,7 +18,7 @@ type CharacterRecord = {
   Movie__c: string,
 }
 
-type MovieRecord = {
+export type MovieRecord = {
   Id: string,
   Name: string,
   Tagline__c: string,
@@ -43,7 +43,8 @@ const BASE_CHARACTER_QUERY = `
 const resolvers = {
   RootQuery: {
     movies: (_: any, __: any, {connectors}: QueryContext) => 
-      connectors.Salesforce.query(BASE_MOVIE_QUERY),
+      connectors.Salesforce.query(BASE_MOVIE_QUERY)
+      .then((records:MovieRecord[]) => records.map(r => connectors.MovieDb.loadMovie(r))),
 
     movie: (_: any, {id}: any, {connectors}: QueryContext) =>
       connectors.Salesforce.queryOne(`
@@ -63,6 +64,9 @@ const resolvers = {
   Movie: {
     id: ({Id}: MovieRecord) => Id,
     title: ({Name}: MovieRecord) => Name,
+    posterUrl: ({poster_path}) => poster_path,
+    voteCount: ({vote_count}) => vote_count,
+    voteAverage: ({vote_average}) => vote_average,
 
     characters: ({Id}: ActorRecord, _: any, {connectors}: QueryContext) => 
       connectors.Salesforce.query(`
