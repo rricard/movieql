@@ -13,6 +13,7 @@ import ActorRow, {
 import type {
   SmallActorInfo,
 } from './ActorRow';
+import AppView from './ui/AppView';
 
 type ActorListProps = {
   data: {
@@ -48,13 +49,15 @@ class ActorList extends React.Component {
   
   render(): ?React.Element<*> {
     return (
-      <ListView
-        dataSource={this.state.dataSource}
-        renderRow={actor => 
-          <ActorRow key={actor.id} actor={actor} />
-        }
-        enableEmptySections={true}
-      />
+      <AppView>
+        <ListView
+          dataSource={this.state.dataSource}
+          renderRow={actor => 
+            <ActorRow key={actor.id} actor={actor} />
+          }
+          enableEmptySections={true}
+        />
+      </AppView>
     );
   }
 }

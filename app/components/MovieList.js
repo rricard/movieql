@@ -13,6 +13,7 @@ import MovieRow, {
 import type {
   SmallMovieInfo,
 } from './MovieRow';
+import AppView from './ui/AppView';
 
 type MovieListProps = {
   data: {
@@ -49,13 +50,16 @@ class MovieList extends React.Component {
 
   render(): ?React.Element<*> {
     return (
-      <ListView
-        dataSource={this.state.dataSource}
-        renderRow={movie => 
-          <MovieRow key={movie.id} movie={movie} />
-        }
-        enableEmptySections={true}
-      />
+      <AppView>
+        <ListView
+          
+          dataSource={this.state.dataSource}
+          renderRow={movie => 
+            <MovieRow key={movie.id} movie={movie} />
+          }
+          enableEmptySections={true}
+        />
+      </AppView>
     );
   }
 }

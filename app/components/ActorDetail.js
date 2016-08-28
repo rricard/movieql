@@ -2,12 +2,13 @@
 
 import React from 'react';
 import {
-  View,
   Text,
 } from 'react-native';
 import gql from 'graphql-tag';
 import {graphql} from 'react-apollo';
 import {connect} from 'react-redux';
+
+import AppView from './ui/AppView';
 
 type ActorInfo = {
   id: string,
@@ -24,12 +25,12 @@ type ActorDetailProps = {
 const ActorDetail = (props: ActorDetailProps): ?React.Element<*> => {
   const {data} = props;
   if (!data.actor) {
-    return <View />;
+    return <AppView />;
   }
   return (
-    <View>
+    <AppView>
       <Text>{data.actor.name}</Text>
-    </View>
+    </AppView>
   );
 };
 

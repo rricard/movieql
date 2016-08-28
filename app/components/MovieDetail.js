@@ -2,12 +2,13 @@
 
 import React from 'react';
 import {
-  View,
   Text,
 } from 'react-native';
 import gql from 'graphql-tag';
 import {graphql} from 'react-apollo';
 import {connect} from 'react-redux';
+
+import AppView from './ui/AppView';
 
 type MovieInfo = {
   id: string,
@@ -24,12 +25,12 @@ type MovieDetailProps = {
 const MovieDetail = (props: MovieDetailProps): ?React.Element<*> => {
   const {data} = props;
   if (!data.movie) {
-    return <View />;
+    return <AppView />;
   }
   return (
-    <View>
+    <AppView>
       <Text>{data.movie.title}</Text>
-    </View>
+    </AppView>
   );
 };
 
