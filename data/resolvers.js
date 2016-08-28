@@ -18,12 +18,21 @@ type CharacterRecord = {
   Movie__c: string,
 }
 
-export type MovieRecord = {
+export type SFDCMovie = {
   Id: string,
   Name: string,
   Tagline__c: string,
   MovieDbId__c: string
 }
+
+export type MovieDbMovie = {
+  original_title: string,
+  poster_path: string,
+  vote_count: number,
+  vote_average: number,
+}
+
+export type MovieRecord = SFDCMovie & MovieDbMovie
 
 const BASE_MOVIE_QUERY = `
   SELECT Id, Name, MovieDbId__c, Tagline__c 
@@ -68,9 +77,9 @@ const resolvers = {
   Movie: {
     id: ({Id}: MovieRecord) => Id,
     title: ({Name}: MovieRecord) => Name,
-    posterUrl: ({poster_path}) => poster_path,
-    voteCount: ({vote_count}) => vote_count,
-    voteAverage: ({vote_average}) => vote_average,
+    posterUrl: ({poster_path}: MovieRecord) => poster_path,
+    voteCount: ({vote_count}: MovieRecord) => vote_count,
+    voteAverage: ({vote_average}: MovieRecord) => vote_average,
 
     characters: ({Id}: ActorRecord, _: any, {connectors}: QueryContext) => 
       connectors.Salesforce.query(`

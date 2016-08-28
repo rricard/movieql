@@ -3,7 +3,11 @@ import Dataloader from 'dataloader';
 import jsforce from 'jsforce';
 import fetch from 'isomorphic-fetch';
 
-import type MovieRecord from './resolvers';
+import type {
+  SFDCMovie,
+  MovieDbMovie,
+  MovieRecord,
+} from './resolvers';
 
 export class SalesforceConnector {
   static _connection: jsforce.Connection;
@@ -53,7 +57,7 @@ export class MovieDbConnector {
     return Promise.all(ids.map(id => this.fetchMovie(id)));
   }
 
-  fetchMovie(id: string) {
+  fetchMovie(id: string): Promise<MovieDbMovie> {
     const apiKey = process.env.MOVIE_DB_TOKEN;
     if (!apiKey) {
       return Promise.reject(new Error(
@@ -66,7 +70,7 @@ export class MovieDbConnector {
       .then(response => response.json());
   }
 
-  loadMovie(record:MovieRecord) {
+  loadMovie(record: SFDCMovie): Promise<MovieRecord> {
     const {MovieDbId__c} = record;
     return this._dataLoader.load(MovieDbId__c)
       .then(movieDbRes => Object.assign({}, record, movieDbRes));
