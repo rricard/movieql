@@ -37,6 +37,7 @@ const MovieQL = (props: MovieQLProps): ?React.Element<*> => {
         name="default"
         navBar={NavBar}
         tabBar={TabBar}
+        navTint="#FAFAFA"
       />
 
       <TabRoute name="tabBar" tint="#32DEAF">
