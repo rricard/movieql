@@ -29,6 +29,7 @@ describe('GraphQL Schema', () => {
         actors {
           id
           name
+          pictureUrl
         }
       }
     `).then(({data}) => {
@@ -47,6 +48,7 @@ describe('GraphQL Schema', () => {
         actor(id:"${SAMUEL_L_JACKSON_ID}") {
           id
           name
+          pictureUrl
         }
       }
     `).then(({data}) => {
@@ -126,6 +128,46 @@ describe('GraphQL Schema', () => {
     `).then(({data}) => {
       const characters = data.movie.characters; 
       assert.isAtLeast(characters.length, 1);
+    });
+  });
+
+  it('should be able to traverse characters and get the actors', () => {
+    return query( `
+      {
+        movie(id:"${PULP_FICTION_ID}") {
+          characters {
+            actor {
+              id
+            }
+          }
+        }
+      }
+    `).then(({data}) => {
+      const characters = data.movie.characters; 
+      assert(
+        characters.some(({actor}) => actor.id === SAMUEL_L_JACKSON_ID),
+        '"Samuel L Jackson" was not found as an actor'
+      );
+    });
+  });
+
+  it('should be able to traverse characters and get the movie', () => {
+    return query( `
+      {
+        actor(id:"${SAMUEL_L_JACKSON_ID}") {
+          characters {
+            movie {
+              id
+            }
+          }
+        }
+      }
+    `).then(({data}) => {
+      const characters = data.actor.characters; 
+      assert(
+        characters.some(({movie}) => movie.id === PULP_FICTION_ID),
+        '"Pulp Fiction" was not found as a movie'
+      );
     });
   });
 });
