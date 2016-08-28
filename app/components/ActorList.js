@@ -3,6 +3,7 @@
 import React from 'react';
 import {
   ListView,
+  ActivityIndicator,
 } from 'react-native';
 import gql from 'graphql-tag';
 import {graphql} from 'react-apollo';
@@ -18,6 +19,7 @@ import AppView from './ui/AppView';
 type ActorListProps = {
   data: {
     actors?: Array<SmallActorInfo>,
+    loading: boolean,
   },
 };
 
@@ -48,15 +50,22 @@ class ActorList extends React.Component {
   }
   
   render(): ?React.Element<*> {
+    const {data} = this.props;
     return (
       <AppView>
-        <ListView
-          dataSource={this.state.dataSource}
-          renderRow={actor => 
-            <ActorRow key={actor.id} actor={actor} />
-          }
-          enableEmptySections={true}
-        />
+        {data.loading ?
+          <ActivityIndicator 
+            animating={true}
+            size="large"
+          /> :
+          <ListView
+            dataSource={this.state.dataSource}
+            renderRow={actor => 
+              <ActorRow key={actor.id} actor={actor} />
+            }
+            enableEmptySections={true}
+          />
+        }
       </AppView>
     );
   }
