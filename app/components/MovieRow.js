@@ -26,7 +26,7 @@ type CharacterInMovie = {
 export type SmallMovieInfo = {
   id: string,
   title: string,
-  tagline: ?string,
+  year: number,
   characters: Array<CharacterInMovie>,
 };
 
@@ -34,7 +34,7 @@ export const smallMovieInfoFragment = createFragment(gql`
   fragment SmallMovieInfo on Movie {
     id
     title
-    tagline
+    year
     posterUrl
     characters {
       id
@@ -101,7 +101,7 @@ const MovieRow = (props: MovieRowProps): ?React.Element<*> => {
         />
         <View style={styles.info}>
           <Text style={styles.title}>{movie.title}</Text>
-          <Text style={styles.tagline}>{movie.tagline}</Text>
+          <Text style={styles.tagline}>{movie.year}</Text>
           <View>
             {movie.characters.slice(0, 2).map(({id, actor}) =>
               <View key={id} style={styles.actor}>
