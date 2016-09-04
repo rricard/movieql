@@ -17,18 +17,17 @@ import {
 
 import AppView from './ui/AppView';
 import JpegImage from './ui/JpegImage';
-
-type ActorInfo = {
-  id: string,
-  name: string,
-  pictureUrl: string
-};
+import type {
+  Actor,
+  Character,
+} from '../types';
 
 type ActorDetailProps = {
   id: string,
   data: {
-    actor?: ActorInfo
+    actor?: Actor
   },
+  openMovie: (character: Character) => any,
 };
 
 const styles = StyleSheet.create({
@@ -50,6 +49,18 @@ const styles = StyleSheet.create({
     color: 'white',
     fontSize: 20,
   },
+  actingHeader: {
+    padding: 10,
+    fontSize: 15,
+  },
+  acting: {
+    flex: 1,
+    padding: 10,
+    flexDirection: 'row',
+  },
+  actingSecondary: {
+    opacity: .7,
+  },
 });
 
 const ActorDetail = (props: ActorDetailProps): ?React.Element<*> => {
@@ -70,14 +81,16 @@ const ActorDetail = (props: ActorDetailProps): ?React.Element<*> => {
               <Text style={styles.actorName}>{actor.name}</Text>
             </View>
         </View>
+        <Text style={styles.actingHeader}>Acting</Text>
         {(actor.characters || []).map(character =>
           <TouchableOpacity 
             key={character.id}
             onPress={() => openMovie(character)}>
-            <View>
+            <View style={styles.acting}>
               <Text>
+                <Text style={styles.actingSecondary}>Playing </Text>
                 {character.name}
-                <Text> in </Text>
+                <Text style={styles.actingSecondary}> in </Text>
                 {character.movie.title}
               </Text>
             </View> 

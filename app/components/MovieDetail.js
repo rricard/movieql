@@ -17,31 +17,15 @@ import {
 
 import JpegImage from './ui/JpegImage';
 import AppView from './ui/AppView';
-
-type Character = {
-  id: string,
-  name: string,
-  actor: {
-    id: string,
-    name: string,
-    pictureUrl: string,
-  },
-};
-
-type MovieInfo = {
-  id: string,
-  title: string,
-  year: number,
-  posterUrl: string,
-  tagline: string,
-  voteAverage: number,
-  characters: Array<Character>,
-};
+import type {
+  Movie,
+  Character,
+} from '../types';
 
 type MovieDetailProps = {
   id: string,
   data: {
-    movie?: MovieInfo
+    movie?: Movie
   },
   openActor: (character: Character) => any,
 };
