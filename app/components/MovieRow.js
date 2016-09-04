@@ -4,6 +4,7 @@ import {
   View,
   Text,
   TouchableOpacity,
+  Image,
 } from 'react-native';
 import gql from 'graphql-tag';
 import {connect} from 'react-redux';
@@ -11,8 +12,6 @@ import {
   actions as routerActions,
 } from 'react-native-router-redux';
 import {createFragment} from 'apollo-client';
-
-import JpegImage from './ui/JpegImage';
 
 type CharacterInMovie = {
   id: string,
@@ -97,9 +96,9 @@ const MovieRow = (props: MovieRowProps): ?React.Element<*> => {
   return (
     <TouchableOpacity onPress={openMovie}>
       <View style={styles.container}>
-        <JpegImage
+        <Image
           style={styles.poster}
-          uri={movie.posterUrl}
+          source={{uri: movie.posterUrl}}
         />
         <View style={styles.info}>
           <Text style={styles.title}>{movie.title}</Text>
@@ -107,9 +106,9 @@ const MovieRow = (props: MovieRowProps): ?React.Element<*> => {
           <View>
             {movie.characters.slice(0, 2).map(({id, actor}) =>
               <View key={id} style={styles.actor}>
-                <JpegImage
+                <Image
                   style={styles.actorFace}
-                  uri={actor.pictureUrl}
+                  source={{uri: actor.pictureUrl}}
                 />
                 <Text>{actor.name}</Text>
               </View>

@@ -4,6 +4,7 @@ import {
   TouchableOpacity,
   StyleSheet,
   View,
+  Image,
 } from 'react-native';
 import gql from 'graphql-tag';
 import {connect} from 'react-redux';
@@ -12,8 +13,6 @@ import {
 } from 'react-native-router-redux';
 
 import {createFragment} from 'apollo-client';
-
-import JpegImage from './ui/JpegImage';
 
 export type SmallActorInfo = {
   id: string,
@@ -71,9 +70,9 @@ const ActorRow = (props: ActorRowProps): ?React.Element<*> => {
   return (
     <TouchableOpacity onPress={openActor}>
       <View style={styles.container}>
-        <JpegImage
+        <Image
           style={styles.actorPicture}
-          uri={actor.pictureUrl}
+          source={{uri: actor.pictureUrl}}
         />
         <View style={styles.info}>
           <Text style={styles.title}>{actor.name}</Text>
