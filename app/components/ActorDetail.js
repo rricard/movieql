@@ -3,33 +3,100 @@
 import React from 'react';
 import {
   Text,
+  View,
+  ScrollView,
+  StyleSheet,
+  TouchableOpacity,
 } from 'react-native';
 import gql from 'graphql-tag';
 import {graphql} from 'react-apollo';
 import {connect} from 'react-redux';
+import {
+  actions as routerActions,
+} from 'react-native-router-redux';
 
 import AppView from './ui/AppView';
-
-type ActorInfo = {
-  id: string,
-  name: string,
-};
+import JpegImage from './ui/JpegImage';
+import type {
+  Actor,
+  Character,
+} from '../types';
 
 type ActorDetailProps = {
   id: string,
   data: {
-    actor?: ActorInfo
+    actor?: Actor
   },
+  openMovie: (character: Character) => any,
 };
 
+const styles = StyleSheet.create({
+  actorHeader: {
+    backgroundColor: '#111',
+    padding: 10,
+    flexDirection: 'row',
+  },
+  picture: {
+    width: 100,
+    height: 150,
+    backgroundColor: '#ccc',
+  },
+  actorInfo: {
+    flex: 1,
+    marginLeft: 10,
+  },
+  actorName: {
+    color: 'white',
+    fontSize: 20,
+  },
+  actingHeader: {
+    padding: 10,
+    fontSize: 15,
+  },
+  acting: {
+    flex: 1,
+    padding: 10,
+    flexDirection: 'row',
+  },
+  actingSecondary: {
+    opacity: .7,
+  },
+});
+
 const ActorDetail = (props: ActorDetailProps): ?React.Element<*> => {
-  const {data} = props;
+  const {data, openMovie} = props;
   if (!data.actor) {
     return <AppView />;
   }
+  const {actor} = data;
   return (
     <AppView>
-      <Text>{data.actor.name}</Text>
+      <ScrollView>
+        <View style={styles.actorHeader}>
+          <JpegImage
+            style={styles.picture}
+            uri={actor.pictureUrl}
+            />
+            <View style={styles.actorInfo}>
+              <Text style={styles.actorName}>{actor.name}</Text>
+            </View>
+        </View>
+        <Text style={styles.actingHeader}>Acting</Text>
+        {(actor.characters || []).map(character =>
+          <TouchableOpacity 
+            key={character.id}
+            onPress={() => openMovie(character)}>
+            <View style={styles.acting}>
+              <Text>
+                <Text style={styles.actingSecondary}>Playing </Text>
+                {character.name}
+                <Text style={styles.actingSecondary}> in </Text>
+                {character.movie.title}
+              </Text>
+            </View> 
+          </TouchableOpacity>
+        )}
+      </ScrollView>
     </AppView>
   );
 };
@@ -39,6 +106,15 @@ const ActorDetailWithData = graphql(gql`
     actor(id: $id) {
       id
       name
+      pictureUrl
+      characters {
+        id
+        name
+        movie {
+          title
+          id
+        }
+      }
     }
   }
 `)(ActorDetail);
@@ -47,6 +123,18 @@ const ActorDetailWithDataAndState = connect(
   (state) => ({
     id: state.router.data.id || '',
   }),
+  (dispatch) => ({
+    openMovie(character: Character) {
+      const {title, id} = character.movie;
+      return dispatch(routerActions.push({
+        name: 'movie',
+        data: {
+          title,
+          id,
+        },
+      }));
+    }, 
+  })
 )(ActorDetailWithData);
 
 export default ActorDetailWithDataAndState;
