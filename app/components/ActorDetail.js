@@ -4,6 +4,7 @@ import React from 'react';
 import {
   Text,
   View,
+  Image,
   ScrollView,
   StyleSheet,
   TouchableOpacity,
@@ -16,7 +17,6 @@ import {
 } from 'react-native-router-redux';
 
 import AppView from './ui/AppView';
-import JpegImage from './ui/JpegImage';
 import type {
   Actor,
   Character,
@@ -73,13 +73,13 @@ const ActorDetail = (props: ActorDetailProps): ?React.Element<*> => {
     <AppView>
       <ScrollView>
         <View style={styles.actorHeader}>
-          <JpegImage
+          <Image
             style={styles.picture}
             uri={actor.pictureUrl}
-            />
-            <View style={styles.actorInfo}>
-              <Text style={styles.actorName}>{actor.name}</Text>
-            </View>
+          />
+          <View style={styles.actorInfo}>
+            <Text style={styles.actorName}>{actor.name}</Text>
+          </View>
         </View>
         <Text style={styles.actingHeader}>Acting</Text>
         {(actor.characters || []).map(character =>
