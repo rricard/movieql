@@ -167,9 +167,7 @@ const MovieDetailWithData = graphql(gql`
 `)(MovieDetail);
 
 const MovieDetailWithDataAndState = connect(
-  (state) => ({
-    id: state.router.data.id || '',
-  }),
+  () => ({}),
   (dispatch) => ({
     openActor(character: Character) {
       const {name, id} = character.actor;

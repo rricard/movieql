@@ -1,13 +1,14 @@
 /* @flow */
 
 import React from 'react';
-import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
 import { View, NavigationExperimental } from 'react-native';
 
 import actorsImage from '../../assets/actor-icon.png';
 import moviesImage from '../../assets/movie-icon.png';
 
+import store from '../store';
+import {popRoute} from '../actions';
 import MovieList from './MovieList';
 import ActorList from './ActorList';
 import MovieDetail from './MovieDetail';
@@ -28,15 +29,19 @@ const tabAssets = {
 };
 
 const SceneRenderer = (sceneProps) => {
-  const {route} = sceneProps.scene;
-  switch(route.key) {
+  const {route: {key, id}} = sceneProps.scene;
+  switch(key) {
     case 'MovieList': return <MovieList />;
+    case 'MovieDetail': return <MovieDetail id={id} />;
     default: return <View />;
   }
 };
 
 const HeaderRenderer = (sceneProps) => {
-  return <NavigationHeader {...sceneProps} />;
+  return <NavigationHeader
+    onNavigateBack={() => store.dispatch(popRoute())}
+    {...sceneProps}
+  />;
 };
 
 const MovieQL = (props: MovieQLProps): ?React.Element<*> => {
