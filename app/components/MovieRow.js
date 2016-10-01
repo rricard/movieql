@@ -10,7 +10,7 @@ import gql from 'graphql-tag';
 import {connect} from 'react-redux';
 import {createFragment} from 'apollo-client';
 
-import {pushRoute} from '../actions';
+import {movieDetailRoute} from '../actions';
 
 type CharacterInMovie = {
   id: string,
@@ -124,11 +124,7 @@ const MovieRowWithState = connect(
   (dispatch, ownProps: MovieRowProps) => ({
     openMovie() {
       const {title, id} = ownProps.movie;
-      return dispatch(pushRoute({
-        key: 'MovieDetail',
-        title,
-        id,
-      }));
+      return dispatch(movieDetailRoute(id, title));
     },
   }),
 )(MovieRow);

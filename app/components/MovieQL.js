@@ -29,10 +29,11 @@ const tabAssets = {
 };
 
 const SceneRenderer = (sceneProps) => {
-  const {route: {key, id}} = sceneProps.scene;
-  switch(key) {
+  const {route: {id, view}} = sceneProps.scene;
+  switch(view) {
     case 'MovieList': return <MovieList />;
     case 'MovieDetail': return <MovieDetail id={id} />;
+    case 'ActorDetail': return <ActorDetail id={id} />;
     default: return <View />;
   }
 };

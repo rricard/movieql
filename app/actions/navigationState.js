@@ -27,3 +27,21 @@ export function popRoute(): PopRouteAction {
     type: POP_ROUTE,
   };
 }
+
+export function movieDetailRoute(id: string, title: string,) {
+  return pushRoute({
+    key: `MovieDetail:${id}:${Date.now()}`,
+    view: 'MovieDetail',
+    id,
+    title,
+  });
+}
+
+export function actorDetailRoute(id: string, name: string,) {
+  return pushRoute({
+    key: `ActorDetail:${id}:${Date.now()}`,
+    view: 'ActorDetail',
+    id,
+    title: name,
+  });
+}

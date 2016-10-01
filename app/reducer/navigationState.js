@@ -12,10 +12,11 @@ import type {
   PopRouteAction,
 } from '../actions';
 
-export type RouteKey = 'MovieList'|'ActorList'|'MovieDetail'|'ActorDetail';
+export type RouteView = 'MovieList'|'ActorList'|'MovieDetail'|'ActorDetail';
 
 type Route = {
-  key: RouteKey,
+  key: string,
+  view: RouteView,
   title?: string,
   id?: string,
 }
@@ -31,7 +32,7 @@ const {
 
 const initialState = {
   index: 0,
-  routes: [{key: 'MovieList', title: 'Movies'}],
+  routes: [{key: 'MovieList', view: 'MovieList', title: 'Movies'}],
 };
 
 export const navigationState = (

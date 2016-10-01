@@ -14,6 +14,7 @@ import {graphql} from 'react-apollo';
 import {connect} from 'react-redux';
 
 import AppView from './ui/AppView';
+import {actorDetailRoute} from '../actions';
 import type {
   Movie,
   Character,
@@ -171,7 +172,7 @@ const MovieDetailWithDataAndState = connect(
   (dispatch) => ({
     openActor(character: Character) {
       const {name, id} = character.actor;
-      return dispatch();
+      return dispatch(actorDetailRoute(id, name));
     },
   }),
 )(MovieDetailWithData);
