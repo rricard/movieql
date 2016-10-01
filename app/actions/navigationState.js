@@ -28,6 +28,20 @@ export function popRoute(): PopRouteAction {
   };
 }
 
+export type SetRootRouteAction = {
+  type: 'SET_ROOT_ROUTE',
+  payload: Route,
+};
+
+export const SET_ROOT_ROUTE = 'SET_ROOT_ROUTE';
+
+export function setRootRoute(route: Route): PopRouteAction {
+  return {
+    type: SET_ROOT_ROUTE,
+    payload: route,
+  };
+}
+
 export function movieDetailRoute(id: string, title: string,) {
   return pushRoute({
     key: `MovieDetail:${id}:${Date.now()}`,
@@ -43,5 +57,21 @@ export function actorDetailRoute(id: string, name: string,) {
     view: 'ActorDetail',
     id,
     title: name,
+  });
+}
+
+export function movieRootRoute() {
+  return setRootRoute({
+    key: 'MovieList',
+    view: 'MovieList',
+    title: 'Movies',
+  });
+}
+
+export function actorRootRoute() {
+  return setRootRoute({
+    key: 'ActorList',
+    view: 'ActorList',
+    title: 'Actors',
   });
 }

@@ -5,11 +5,13 @@ import { NavigationExperimental } from 'react-native';
 import {
   PUSH_ROUTE,
   POP_ROUTE,
+  SET_ROOT_ROUTE,
 } from '../actions';
 
 import type {
   PushRouteAction,
   PopRouteAction,
+  SetRootRouteAction,
 } from '../actions';
 
 export type RouteView = 'MovieList'|'ActorList'|'MovieDetail'|'ActorDetail';
@@ -46,6 +48,13 @@ export const navigationState = (
     }
     case POP_ROUTE: {
       return NavigationStateUtils.pop(state);
+    }
+    case SET_ROOT_ROUTE: {
+      const setRootRouteAction: SetRootRouteAction = action;
+      return {
+        index: 0,
+        routes: [setRootRouteAction.payload],
+      };
     }
     default: return state;
   }

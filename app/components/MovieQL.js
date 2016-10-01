@@ -2,13 +2,23 @@
 
 import React from 'react';
 import {connect} from 'react-redux';
-import { View, NavigationExperimental } from 'react-native';
+import {
+  View,
+  Image,
+  NavigationExperimental,
+  StyleSheet,
+} from 'react-native';
+import TabNavigator from 'react-native-tab-navigator';
 
 import actorsImage from '../../assets/actor-icon.png';
 import moviesImage from '../../assets/movie-icon.png';
 
 import store from '../store';
-import {popRoute} from '../actions';
+import {
+  popRoute,
+  movieRootRoute,
+  actorRootRoute,
+} from '../actions';
 import MovieList from './MovieList';
 import ActorList from './ActorList';
 import MovieDetail from './MovieDetail';
@@ -21,17 +31,24 @@ const {
 
 type MovieQLProps = {
   navigationState: any,
+  selectMovies: Function,
+  selectActors: Function,
 };
 
-const tabAssets = {
-  actors: actorsImage,
-  movies: moviesImage,
-};
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+  },
+  navigator: {
+    flex: 60,
+  },
+});
 
 const SceneRenderer = (sceneProps) => {
   const {route: {id, view}} = sceneProps.scene;
   switch(view) {
     case 'MovieList': return <MovieList />;
+    case 'ActorList': return <ActorList />;
     case 'MovieDetail': return <MovieDetail id={id} />;
     case 'ActorDetail': return <ActorDetail id={id} />;
     default: return <View />;
@@ -46,13 +63,34 @@ const HeaderRenderer = (sceneProps) => {
 };
 
 const MovieQL = (props: MovieQLProps): ?React.Element<*> => {
-  const {navigationState} = props;
-  return (
+  const {navigationState, selectMovies, selectActors} = props;
+  const cardStack = (
     <NavigationCardStack
+      style={styles.navigator}
       navigationState={navigationState}
       renderHeader={HeaderRenderer}
       renderScene={SceneRenderer}
     />
+  );
+  return (
+    <TabNavigator>
+      <TabNavigator.Item
+        title="Movies"
+        renderIcon={() => <Image source={moviesImage} />}
+        selected={navigationState.routes[0].view === 'MovieList'}
+        onPress={selectMovies}
+      >
+        {cardStack}
+      </TabNavigator.Item>
+      <TabNavigator.Item
+        title="Actors"
+        renderIcon={() => <Image source={actorsImage} />}
+        selected={navigationState.routes[0].view === 'ActorList'}
+        onPress={selectActors}
+      >
+        {cardStack}
+      </TabNavigator.Item>
+    </TabNavigator>
   );
 };
 
@@ -60,6 +98,14 @@ const MovieQLWithState = connect(
   (state) => ({
     navigationState: state.navigationState,
   }),
+  (dispatch) => ({
+    selectMovies() {
+      return dispatch(movieRootRoute());
+    },
+    selectActors() {
+      return dispatch(actorRootRoute());
+    },
+  })
 )(MovieQL);
 
 export default MovieQLWithState;
