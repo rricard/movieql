@@ -75,7 +75,7 @@ const ActorDetail = (props: ActorDetailProps): ?React.Element<*> => {
         <View style={styles.actorHeader}>
           <Image
             style={styles.picture}
-            uri={actor.pictureUrl}
+            source={{uri: actor.pictureUrl}}
           />
           <View style={styles.actorInfo}>
             <Text style={styles.actorName}>{actor.name}</Text>
