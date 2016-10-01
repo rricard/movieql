@@ -1,13 +1,13 @@
 /* @flow */
 
 import {combineReducers} from 'redux';
-import { reducer as router } from 'react-native-router-redux';
 
 import apolloClient from '../client';
+import {navigationState} from './navigationState';
 
 const appReducer = combineReducers({
   apollo: apolloClient.reducer(),
-  router,
+  navigationState,
 });
 
 export default appReducer;
