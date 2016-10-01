@@ -7,6 +7,7 @@ import {
   View,
   Text,
   TouchableOpacity,
+  Image,
 } from 'react-native';
 import gql from 'graphql-tag';
 import {graphql} from 'react-apollo';
@@ -15,7 +16,6 @@ import {
   actions as routerActions,
 } from 'react-native-router-redux';
 
-import JpegImage from './ui/JpegImage';
 import AppView from './ui/AppView';
 import type {
   Movie,
@@ -101,9 +101,9 @@ const MovieDetail = (props: MovieDetailProps): ?React.Element<*> => {
     <AppView>
       <ScrollView>
         <View style={styles.movieHeader}>
-          <JpegImage
+          <Image
             style={styles.poster}
-            uri={movie.posterUrl}
+            source={{uri: movie.posterUrl}}
           />
           <View style={styles.movieInfo}>
             <Text style={styles.movieTitle}>{movie.title}</Text>
@@ -130,9 +130,9 @@ const MovieDetail = (props: MovieDetailProps): ?React.Element<*> => {
             onPress={() => openActor(character)}
           >
             <View style={styles.character}>
-              <JpegImage
+              <Image
                 style={styles.actorFace}
-                uri={character.actor.pictureUrl}
+                source={{uri: character.actor.pictureUrl}}
               />
               <Text>
                 {character.actor.name}

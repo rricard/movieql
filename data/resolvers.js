@@ -36,7 +36,7 @@ export type MovieDbMovie = {
 
 export type MovieRecord = SFDCMovie & MovieDbMovie
 
-const IMAGES_HOSTNAME = 'http://image.tmdb.org/t/p/';
+const IMAGES_HOSTNAME = 'https://image.tmdb.org/t/p/';
 
 const resolvers = {
   RootQuery: {
