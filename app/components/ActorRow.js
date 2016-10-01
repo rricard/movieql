@@ -11,6 +11,10 @@ import {connect} from 'react-redux';
 
 import {createFragment} from 'apollo-client';
 
+import {
+  actorDetailRoute,
+} from '../actions';
+
 export type SmallActorInfo = {
   id: string,
   name: string
@@ -91,7 +95,7 @@ const ActorRowWithState = connect(
   (dispatch, ownProps: ActorRowProps) => ({
     openActor() {
       const {name, id} = ownProps.actor;
-      return dispatch();
+      return dispatch(actorDetailRoute(id, name));
     },
   }),
 )(ActorRow);

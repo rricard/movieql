@@ -6,7 +6,6 @@ import {
   View,
   Image,
   NavigationExperimental,
-  StyleSheet,
 } from 'react-native';
 import TabNavigator from 'react-native-tab-navigator';
 
@@ -35,15 +34,6 @@ type MovieQLProps = {
   selectActors: Function,
 };
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-  },
-  navigator: {
-    flex: 60,
-  },
-});
-
 const SceneRenderer = (sceneProps) => {
   const {route: {id, view}} = sceneProps.scene;
   switch(view) {
@@ -66,14 +56,13 @@ const MovieQL = (props: MovieQLProps): ?React.Element<*> => {
   const {navigationState, selectMovies, selectActors} = props;
   const cardStack = (
     <NavigationCardStack
-      style={styles.navigator}
       navigationState={navigationState}
       renderHeader={HeaderRenderer}
       renderScene={SceneRenderer}
     />
   );
   return (
-    <TabNavigator>
+    <TabNavigator sceneStyle={{paddingBottom: 0}}>
       <TabNavigator.Item
         title="Movies"
         renderIcon={() => <Image source={moviesImage} />}
