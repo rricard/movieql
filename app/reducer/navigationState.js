@@ -31,8 +31,7 @@ const {
 
 const initialState = {
   index: 0,
-  title: 'Movies',
-  routes: [{key: 'MovieList'}],
+  routes: [{key: 'MovieList', title: 'Movies'}],
 };
 
 export const navigationState = (

@@ -15,6 +15,7 @@ import ActorDetail from './ActorDetail';
 
 const {
   CardStack: NavigationCardStack,
+  Header: NavigationHeader,
 } = NavigationExperimental;
 
 type MovieQLProps = {
@@ -27,9 +28,15 @@ const tabAssets = {
 };
 
 const SceneRenderer = (sceneProps) => {
-  switch(sceneProps.scene.key) {
+  const {route} = sceneProps.scene;
+  switch(route.key) {
+    case 'MovieList': return <MovieList />;
     default: return <View />;
   }
+};
+
+const HeaderRenderer = (sceneProps) => {
+  return <NavigationHeader {...sceneProps} />;
 };
 
 const MovieQL = (props: MovieQLProps): ?React.Element<*> => {
@@ -37,6 +44,7 @@ const MovieQL = (props: MovieQLProps): ?React.Element<*> => {
   return (
     <NavigationCardStack
       navigationState={navigationState}
+      renderHeader={HeaderRenderer}
       renderScene={SceneRenderer}
     />
   );
