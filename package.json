@@ -30,9 +30,9 @@
     "jsforce": "^1.7.0",
     "react": "15.3.1",
     "react-apollo": "^0.4.7",
-    "react-native": "0.32.0",
+    "react-native": "0.34.1",
     "react-native-fetch-blob": "^0.9.3",
-    "react-native-router-redux": "Qwikly/react-native-router-redux#768f250",
+    "react-native-tab-navigator": "^0.3.3",
     "react-redux": "^4.4.5",
     "redux": "^3.5.2"
   },

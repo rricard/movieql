@@ -12,10 +12,8 @@ import {
 import gql from 'graphql-tag';
 import {graphql} from 'react-apollo';
 import {connect} from 'react-redux';
-import {
-  actions as routerActions,
-} from 'react-native-router-redux';
 
+import {movieDetailRoute} from '../actions';
 import AppView from './ui/AppView';
 import type {
   Actor,
@@ -120,19 +118,11 @@ const ActorDetailWithData = graphql(gql`
 `)(ActorDetail);
 
 const ActorDetailWithDataAndState = connect(
-  (state) => ({
-    id: state.router.data.id || '',
-  }),
+  () => ({}),
   (dispatch) => ({
     openMovie(character: Character) {
       const {title, id} = character.movie;
-      return dispatch(routerActions.push({
-        name: 'movie',
-        data: {
-          title,
-          id,
-        },
-      }));
+      return dispatch(movieDetailRoute(id, title));
     }, 
   })
 )(ActorDetailWithData);

@@ -8,11 +8,12 @@ import {
 } from 'react-native';
 import gql from 'graphql-tag';
 import {connect} from 'react-redux';
-import {
-  actions as routerActions,
-} from 'react-native-router-redux';
 
 import {createFragment} from 'apollo-client';
+
+import {
+  actorDetailRoute,
+} from '../actions';
 
 export type SmallActorInfo = {
   id: string,
@@ -94,13 +95,7 @@ const ActorRowWithState = connect(
   (dispatch, ownProps: ActorRowProps) => ({
     openActor() {
       const {name, id} = ownProps.actor;
-      return dispatch(routerActions.push({
-        name: 'actor',
-        data: {
-          title: name,
-          id,
-        },
-      }));
+      return dispatch(actorDetailRoute(id, name));
     },
   }),
 )(ActorRow);

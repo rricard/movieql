@@ -8,10 +8,9 @@ import {
 } from 'react-native';
 import gql from 'graphql-tag';
 import {connect} from 'react-redux';
-import {
-  actions as routerActions,
-} from 'react-native-router-redux';
 import {createFragment} from 'apollo-client';
+
+import {movieDetailRoute} from '../actions';
 
 type CharacterInMovie = {
   id: string,
@@ -125,13 +124,7 @@ const MovieRowWithState = connect(
   (dispatch, ownProps: MovieRowProps) => ({
     openMovie() {
       const {title, id} = ownProps.movie;
-      return dispatch(routerActions.push({
-        name: 'movie',
-        data: {
-          title,
-          id,
-        },
-      }));
+      return dispatch(movieDetailRoute(id, title));
     },
   }),
 )(MovieRow);
