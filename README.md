@@ -5,3 +5,7 @@
 ---
 
 Graphql+Salesforce -based React Native Movie Application
+
+![MovieQL](https://cloud.githubusercontent.com/assets/246520/19056314/41bdcaba-897d-11e6-903c-1f92db23b93b.gif)
+
+----
