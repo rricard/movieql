@@ -35,7 +35,7 @@ type MovieQLProps = {
 };
 
 const SceneRenderer = (sceneProps) => {
-  const {route: {id, view}} = sceneProps.scene;
+  const {route: {id, view}} = (sceneProps.scene: any);
   switch(view) {
     case 'MovieList': return <MovieList />;
     case 'ActorList': return <ActorList />;
@@ -59,6 +59,7 @@ const MovieQL = (props: MovieQLProps): ?React.Element<*> => {
       navigationState={navigationState}
       renderHeader={HeaderRenderer}
       renderScene={SceneRenderer}
+      style={{}}
     />
   );
   return (

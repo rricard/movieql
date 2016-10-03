@@ -16,7 +16,7 @@ import type {
 
 export type RouteView = 'MovieList'|'ActorList'|'MovieDetail'|'ActorDetail';
 
-type Route = {
+export type Route = {
   key: string,
   view: RouteView,
   title?: string,
@@ -44,6 +44,7 @@ export const navigationState = (
   switch (action.type) {
     case PUSH_ROUTE: {
       const pushRouteAction: PushRouteAction = action;
+      // $FlowFixMe: correspond to RN's internal types for routing
       return NavigationStateUtils.push(state, pushRouteAction.payload);
     }
     case POP_ROUTE: {
