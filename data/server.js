@@ -16,9 +16,18 @@ import {
 const HOST = process.env.HOST || 'localhost';
 const PORT = process.env.PORT || 3000;
 
+function logIncomingGraphQL(req, res, next) {
+  console.info('❓️️ Incoming GraphQL Query');
+  console.info('-------------------------');
+  console.info(req.body.query);
+  console.info('');
+  console.info('');
+  next();
+}
+
 const app = express();
 initSfdcConnection().then(() => {
-  app.use('/graphql', bodyParser.json(), apolloExpress({
+  app.use('/graphql', bodyParser.json(), logIncomingGraphQL, apolloExpress({
     schema,
     context: {
       loaders: createLoaders(),
@@ -27,6 +36,14 @@ initSfdcConnection().then(() => {
       console.error('GraphQL execution error:', error.stack);
       return error.message;
     },
+    formatResponse: (data: any) => {
+      console.info('✅ Outgoing GraphQL Response');
+      console.info('----------------------------');
+      console.info(JSON.stringify(data, null, ' '));
+      console.info('');
+      console.info('');
+      return data;
+    }
   }));
   
   app.use('/graphiql', graphiqlExpress({
